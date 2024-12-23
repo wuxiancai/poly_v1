@@ -141,7 +141,7 @@ class CryptoTrader:
                     return saved_config
                     
             except FileNotFoundError:
-                self.logger.warning("配置文件不存在，创建默���配置")
+                self.logger.warning("配置文件不存在，创建默认配置")
                 with open('config.json', 'w', encoding='utf-8') as f:
                     json.dump(default_config, f, indent=4)
                 return default_config
@@ -828,7 +828,7 @@ class CryptoTrader:
             json.dump(self.config, f)
 
     def update_status(self, message):
-        # 检查是��是错误消息
+        # 检查是否是错误消息
         is_error = any(err in message.lower() for err in ['错误', '失败', 'error', 'failed', 'exception'])
         
         # 更新状态标签，如果是错误则显示红色
@@ -1074,7 +1074,7 @@ class CryptoTrader:
         try:
             url = self.url_entry.get().strip()
             if not url:
-                messagebox.showwarning("告", "���入网址")
+                messagebox.showwarning("告", "输入网址")
                 return
                 
             if not url.startswith(('http://', 'https://')):
@@ -1151,7 +1151,7 @@ class CryptoTrader:
             with open(filename, 'w', encoding='utf-8') as f:
                 f.write(html)
                 
-            self.update_status(f"HTML结构��导出到: {filename}")
+            self.update_status(f"HTML结构导出到: {filename}")
             messagebox.showinfo("成功", f"HTML已保存到: {filename}")
             
         except Exception as e:
@@ -1276,7 +1276,7 @@ class CryptoTrader:
             
             position_value = None
             try:
-                # 尝试��取第二行NO的标签值，如果不存在会直接进入except块
+                # 尝试获取第二行NO的标签值，如果不存在会直接进入except块
                 second_position = WebDriverWait(self.driver, 2).until(  # 缩短等待时间到2秒
                     EC.presence_of_element_located((By.XPATH, 
                         '//*[@id="event-layout-with-side-nav"]/div[1]/div/div/div[2]/div/div[2]/div/div[2]/table/tbody/tr[1]/td[6]/div/button'))
@@ -2225,7 +2225,7 @@ class CryptoTrader:
                     )
                 # 检查No4价格匹配
                 elif abs(no4_target - no_price) < 0.0001 and no4_target > 0:
-                    self.logger.info("No 4价格匹��，执行自动交易")
+                    self.logger.info("No 4价格匹配，执行自动交易")
                     
                     # 执行交易操作
                     self.buy_no_button.invoke()
@@ -2599,13 +2599,13 @@ class CryptoTrader:
             
             self.logger.info(f"准备发送邮件: {trade_type}")
             
-            # 创建���件对象
+            # 创建邮件对象
             msg = MIMEMultipart()
             
             # 获取当前时间
             current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             
-            # 设��邮件主题
+            # 设置邮件主题
             subject = f'polymarket自动交易详情 {current_time}'
             msg['Subject'] = Header(subject, 'utf-8')
             
