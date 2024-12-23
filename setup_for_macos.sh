@@ -82,14 +82,6 @@ echo "安装 Chrome 和 ChromeDriver..."
 brew install --cask google-chrome --force
 brew install chromedriver --force
 
-# 创建启动脚本
-echo "创建启动脚本 (启动新的Chrome实例)..."
-cat > start_chrome.sh << 'EOL'
-#!/bin/bash
-"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --remote-debugging-port=9222 --user-data-dir="$HOME/ChromeDebug" https://polymarket.com/markets/crypto
-EOL
-
-
 chmod +x start_chrome.sh
 
 # 创建自动启动脚本
