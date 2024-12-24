@@ -371,13 +371,32 @@ class CryptoTrader:
         self.yes_amount_entry = ttk.Entry(self.yes_frame)
         self.yes_amount_entry.insert(0, str(self.config['trading']['Yes0']['amount']))
         self.yes_amount_entry.grid(row=1, column=1, padx=5, pady=5, sticky="ew")
+
+        # 直接创建所有Yes Entry对象并设置默认值
+        self.yes1_price_entry = ttk.Entry(self.yes_frame)
+        self.yes1_price_entry.insert(0, "0.00")
+        self.yes2_price_entry = ttk.Entry(self.yes_frame)
+        self.yes2_price_entry.insert(0, "0.00")
+        self.yes3_price_entry = ttk.Entry(self.yes_frame)
+        self.yes3_price_entry.insert(0, "0.00")
+        self.yes4_price_entry = ttk.Entry(self.yes_frame)
+        self.yes4_price_entry.insert(0, "0.00")
+        self.yes5_price_entry = ttk.Entry(self.yes_frame)
+        self.yes5_price_entry.insert(0, "0.00")
+        
+        # 设置它们的grid布局
+        self.yes1_price_entry.grid(row=2, column=1, padx=5, pady=5, sticky="ew")
+        self.yes2_price_entry.grid(row=4, column=1, padx=5, pady=5, sticky="ew")
+        self.yes3_price_entry.grid(row=6, column=1, padx=5, pady=5, sticky="ew")
+        self.yes4_price_entry.grid(row=8, column=1, padx=5, pady=5, sticky="ew")
+        self.yes5_price_entry.grid(row=10, column=1, padx=5, pady=5, sticky="ew")
         
         # 修改Yes1-5和No1-5的默认价格值
         for i in range(4):
             ttk.Label(self.yes_frame, text=f"Yes {i+1} 价格($):", font=('Arial', 12)).grid(row=i*2+2, column=0, padx=5, pady=5)
-            price_entry = ttk.Entry(self.yes_frame)
-            price_entry.insert(0, "0.00")  # 修改为0.00
-            price_entry.grid(row=i*2+2, column=1, padx=5, pady=5, sticky="ew")
+            # 设置默认价格为0.00
+            getattr(self, f'yes{i+1}_price_entry').delete(0, tk.END)
+            getattr(self, f'yes{i+1}_price_entry').insert(0, "0.00")
             
             ttk.Label(self.yes_frame, text=f"Yes {i+1} 金额:", font=('Arial', 12)).grid(row=i*2+3, column=0, padx=5, pady=5)
             amount_entry = ttk.Entry(self.yes_frame)
@@ -415,12 +434,32 @@ class CryptoTrader:
         self.no_amount_entry = ttk.Entry(self.no_frame)
         self.no_amount_entry.insert(0, str(self.config['trading']['No0']['amount']))
         self.no_amount_entry.grid(row=1, column=1, padx=5, pady=5, sticky="ew")
+
+        # 直接创建所有No Entry对象并设置默认值
+        self.no1_price_entry = ttk.Entry(self.no_frame)
+        self.no1_price_entry.insert(0, "0.00")
+        self.no2_price_entry = ttk.Entry(self.no_frame)
+        self.no2_price_entry.insert(0, "0.00")
+        self.no3_price_entry = ttk.Entry(self.no_frame)
+        self.no3_price_entry.insert(0, "0.00")
+        self.no4_price_entry = ttk.Entry(self.no_frame)
+        self.no4_price_entry.insert(0, "0.00")
+        self.no5_price_entry = ttk.Entry(self.no_frame)
+        self.no5_price_entry.insert(0, "0.00")
+    
+        # 设置它们的grid布局
+        self.no1_price_entry.grid(row=2, column=1, padx=5, pady=5, sticky="ew")
+        self.no2_price_entry.grid(row=4, column=1, padx=5, pady=5, sticky="ew")
+        self.no3_price_entry.grid(row=6, column=1, padx=5, pady=5, sticky="ew")
+        self.no4_price_entry.grid(row=8, column=1, padx=5, pady=5, sticky="ew")
+        self.no5_price_entry.grid(row=10, column=1, padx=5, pady=5, sticky="ew")
         
         for i in range(4):
             ttk.Label(self.no_frame, text=f"No {i+1} 价格($):", font=('Arial', 12)).grid(row=i*2+2, column=0, padx=5, pady=5)
-            price_entry = ttk.Entry(self.no_frame)
-            price_entry.insert(0, "0.00")  # 修改为0.00
-            price_entry.grid(row=i*2+2, column=1, padx=5, pady=5, sticky="ew")
+            ttk.Label(self.no_frame, text=f"No {i+1} 金额:", font=('Arial', 12)).grid(row=i*2+3, column=0, padx=5, pady=5)
+            # 设置默认价格为0.00
+            getattr(self, f'no{i+1}_price_entry').delete(0, tk.END)
+            getattr(self, f'no{i+1}_price_entry').insert(0, "0.00")
             
             ttk.Label(self.no_frame, text=f"No {i+1} 金额:", font=('Arial', 12)).grid(row=i*2+3, column=0, padx=5, pady=5)
             amount_entry = ttk.Entry(self.no_frame)
@@ -2404,11 +2443,31 @@ class CryptoTrader:
                     # 点击开始监控按钮
                     self.start_button.invoke()
 
-                    # 重置Yes0和No0价格为0.55
+                    # 设置新的价格并重启监控
                     self.yes_price_entry.delete(0, tk.END)
                     self.yes_price_entry.insert(0, "0.55")
                     self.no_price_entry.delete(0, tk.END)
-                    self.no_price_entry.insert(0, "0.55")         
+                    self.no_price_entry.insert(0, "0.55")
+                    self.yes1_price_entry.delete(0, tk.END)
+                    self.yes1_price_entry.insert(0, "0.00")
+                    self.no1_price_entry.delete(0, tk.END)
+                    self.no1_price_entry.insert(0, "0.00")
+                    self.yes2_price_entry.delete(0, tk.END)
+                    self.yes2_price_entry.insert(0, "0.00")
+                    self.no2_price_entry.delete(0, tk.END)
+                    self.no2_price_entry.insert(0, "0.00")
+                    self.yes3_price_entry.delete(0, tk.END)
+                    self.yes3_price_entry.insert(0, "0.00")
+                    self.no3_price_entry.delete(0, tk.END)
+                    self.no3_price_entry.insert(0, "0.00")
+                    self.yes4_price_entry.delete(0, tk.END)
+                    self.yes4_price_entry.insert(0, "0.00")
+                    self.no4_price_entry.delete(0, tk.END)
+                    self.no4_price_entry.insert(0, "0.00")
+                    self.yes5_price_entry.delete(0, tk.END)
+                    self.yes5_price_entry.insert(0, "0.00")
+                    self.no5_price_entry.delete(0, tk.END)
+                    self.no5_price_entry.insert(0, "0.00")         
         except Exception as e:
             self.logger.error(f"Sell_yes执行失败: {str(e)}")
             self.update_status(f"Sell_yes执行失败: {str(e)}")
@@ -2506,11 +2565,31 @@ class CryptoTrader:
                     # 重新启动开始监控
                     self.start_button.invoke()
 
-                    # 重置Yes0和No0价格为0.55
+                    # 设置新的价格并重启监控
                     self.yes_price_entry.delete(0, tk.END)
                     self.yes_price_entry.insert(0, "0.55")
                     self.no_price_entry.delete(0, tk.END)
                     self.no_price_entry.insert(0, "0.55")
+                    self.yes1_price_entry.delete(0, tk.END)
+                    self.yes1_price_entry.insert(0, "0.00")
+                    self.no1_price_entry.delete(0, tk.END)
+                    self.no1_price_entry.insert(0, "0.00")
+                    self.yes2_price_entry.delete(0, tk.END)
+                    self.yes2_price_entry.insert(0, "0.00")
+                    self.no2_price_entry.delete(0, tk.END)
+                    self.no2_price_entry.insert(0, "0.00")
+                    self.yes3_price_entry.delete(0, tk.END)
+                    self.yes3_price_entry.insert(0, "0.00")
+                    self.no3_price_entry.delete(0, tk.END)
+                    self.no3_price_entry.insert(0, "0.00")
+                    self.yes4_price_entry.delete(0, tk.END)
+                    self.yes4_price_entry.insert(0, "0.00")
+                    self.no4_price_entry.delete(0, tk.END)
+                    self.no4_price_entry.insert(0, "0.00")
+                    self.yes5_price_entry.delete(0, tk.END)
+                    self.yes5_price_entry.insert(0, "0.00")
+                    self.no5_price_entry.delete(0, tk.END)
+                    self.no5_price_entry.insert(0, "0.00")
         except Exception as e:
             self.logger.error(f"Sell_no执行失败: {str(e)}")
             self.update_status(f"Sell_no执行失败: {str(e)}")
