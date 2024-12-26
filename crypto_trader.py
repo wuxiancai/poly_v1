@@ -223,13 +223,13 @@ class CryptoTrader:
         # 反水一次设置
         ttk.Label(settings_container, text="反水一次(%):").grid(row=0, column=2, padx=5, pady=5)
         self.first_rebound_entry = ttk.Entry(settings_container, width=10)
-        self.first_rebound_entry.insert(0, "240")
+        self.first_rebound_entry.insert(0, "235")
         self.first_rebound_entry.grid(row=0, column=3, padx=5, pady=5)
         
         # 反水N次设置
         ttk.Label(settings_container, text="反水N次(%):").grid(row=0, column=4, padx=5, pady=5)
         self.n_rebound_entry = ttk.Entry(settings_container, width=10)
-        self.n_rebound_entry.insert(0, "130")
+        self.n_rebound_entry.insert(0, "135")
         self.n_rebound_entry.grid(row=0, column=5, padx=5, pady=5)
         
         # 配置列权重使输入框均匀分布
