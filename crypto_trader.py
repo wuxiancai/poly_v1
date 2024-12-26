@@ -1642,10 +1642,10 @@ class CryptoTrader:
                     # 设置 Yes6和No6价格为0.85
                     yes6_price_entry = self.yes_frame.grid_slaves(row=12, column=1)[0]
                     yes6_price_entry.delete(0, tk.END)
-                    yes6_price_entry.insert(0, "0.85")
+                    yes6_price_entry.insert(0, "0.95")
                     no6_price_entry = self.no_frame.grid_slaves(row=12, column=1)[0]
                     no6_price_entry.delete(0, tk.END)
-                    no6_price_entry.insert(0, "0.85")
+                    no6_price_entry.insert(0, "0.95")
                     # 增加等待 1秒
                     time.sleep(1)
                     
@@ -1698,10 +1698,10 @@ class CryptoTrader:
                     # 设置 Yes6和No6价格为0.85
                     yes6_price_entry = self.yes_frame.grid_slaves(row=12, column=1)[0]
                     yes6_price_entry.delete(0, tk.END)
-                    yes6_price_entry.insert(0, "0.85")
+                    yes6_price_entry.insert(0, "0.95")
                     no6_price_entry = self.no_frame.grid_slaves(row=12, column=1)[0]
                     no6_price_entry.delete(0, tk.END)
-                    no6_price_entry.insert(0, "0.85")
+                    no6_price_entry.insert(0, "0.95")
                     # 增加等待 3秒
                     time.sleep(1)
         except ValueError as e:
@@ -2040,7 +2040,7 @@ class CryptoTrader:
                     # 设置 Yes6和No6价格为0.85
                     yes6_price_entry = self.yes_frame.grid_slaves(row=12, column=1)[0]
                     yes6_price_entry.delete(0, tk.END)
-                    yes6_price_entry.insert(0, "0.85")
+                    yes6_price_entry.insert(0, "0.95")
                     no6_price_entry = self.no_frame.grid_slaves(row=12, column=1)[0]
                     no6_price_entry.delete(0, tk.END)
                     no6_price_entry.insert(0, "0.5")
@@ -2094,7 +2094,7 @@ class CryptoTrader:
                     yes6_price_entry.insert(0, "0.5")
                     no6_price_entry = self.no_frame.grid_slaves(row=12, column=1)[0]
                     no6_price_entry.delete(0, tk.END)
-                    no6_price_entry.insert(0, "0.85")
+                    no6_price_entry.insert(0, "0.95")
                     
                     # 增加交易次数
                     self.trade_count += 1
