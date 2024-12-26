@@ -128,7 +128,7 @@ if __name__ == "__main__":
 EOL
 
 # 运行测试
-echo "\n运行环境测试..."
+echo "运行环境测试..."
 python3 test_environment.py
 
 echo "${GREEN}安装完成！${NC}"
@@ -140,4 +140,4 @@ echo "3. 所有配置已自动完成，无需手动操作"
 # 自动清理安装缓存
 brew cleanup -s
 pip3 cache purge
-sudo rm -rf test_environment.py
+rm -rf test_environment.py
