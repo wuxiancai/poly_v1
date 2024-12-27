@@ -107,8 +107,8 @@ class CryptoTrader:
                     'url': ''
                 },
                 'trading': {
-                    'Yes0': {'target_price': 0.55, 'amount': 0.0},
-                    'Yes1': {'target_price': 0.55, 'amount': 0.0},
+                    'Yes0': {'target_price': 0.54, 'amount': 0.0},
+                    'Yes1': {'target_price': 0.54, 'amount': 0.0},
                     'Yes2': {'target_price': 0.55, 'amount': 0.0},
                     'Yes3': {'target_price': 0.55, 'amount': 0.0},
                     'Yes4': {'target_price': 0.55, 'amount': 0.0},
