@@ -2477,7 +2477,7 @@ class CryptoTrader:
             current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             
             # 设置邮件主题
-            subject = f'polymarket自动交易详情 {current_time}'
+            subject = f'{hostname}第{trade_count}次{trade_type}的{trading_pair}'
             msg['Subject'] = Header(subject, 'utf-8')
             
             # 设置发件人和收件人
