@@ -113,7 +113,7 @@ class CryptoTrader:
                     'Yes3': {'target_price': 0.55, 'amount': 0.0},
                     'Yes4': {'target_price': 0.55, 'amount': 0.0},
                     'Yes5': {'target_price': 0.55, 'amount': 0.0},
-                    'No0': {'target_price': 0.55, 'amount': 0.0},
+                    'No0': {'target_price': 0.54, 'amount': 0.0},
                     'No1': {'target_price': 0.55, 'amount': 0.0},
                     'No2': {'target_price': 0.55, 'amount': 0.0},
                     'No3': {'target_price': 0.55, 'amount': 0.0},
