@@ -27,11 +27,11 @@ fi
 export HOMEBREW_NO_AUTO_UPDATE=1
 export NONINTERACTIVE=1
 export CI=1
-"""# 在 HOSTS 文件中添加 github.com 和 raw.githubusercontent.com 的记录
-echo "185.199.108.153 raw.githubusercontent.com" | sudo tee -a /etc/hosts
-echo "185.199.109.153 raw.githubusercontent.com" | sudo tee -a /etc/hosts
-echo "185.199.110.153 raw.githubusercontent.com" | sudo tee -a /etc/hosts
-echo "185.199.111.153 raw.githubusercontent.com" | sudo tee -a /etc/hosts"""
+# 在 HOSTS 文件中添加 github.com 和 raw.githubusercontent.com 的记录
+#echo "185.199.108.153 raw.githubusercontent.com" | sudo tee -a /etc/hosts
+#echo "185.199.109.153 raw.githubusercontent.com" | sudo tee -a /etc/hosts
+#echo "185.199.110.153 raw.githubusercontent.com" | sudo tee -a /etc/hosts
+#echo "185.199.111.153 raw.githubusercontent.com" | sudo tee -a /etc/hosts
 
 # 检查并安装 Homebrew (自动模式)
 if ! command -v brew &> /dev/null; then
