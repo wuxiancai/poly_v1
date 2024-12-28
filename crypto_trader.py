@@ -610,7 +610,7 @@ class CryptoTrader:
         """设置 Yes/No 各级金额"""
         try:
             #设置重试参数
-            max_retry = 3
+            max_retry = 30
             retry_count = 0
 
             while retry_count < max_retry:
