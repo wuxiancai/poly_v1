@@ -2476,6 +2476,10 @@ class CryptoTrader:
             # 获取当前时间
             current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             
+            # 获取交易币对信息
+            trading_pair = self.trading_pair_label.cget("text")
+            if not trading_pair or trading_pair == "--":
+                trading_pair = "未知交易币对"
             # 设置邮件主题
             subject = f'{hostname}第{trade_count}次{trade_type}的{trading_pair}'
             msg['Subject'] = Header(subject, 'utf-8')
@@ -2483,11 +2487,6 @@ class CryptoTrader:
             # 设置发件人和收件人
             msg['From'] = sender
             msg['To'] = receiver
-            
-            # 获取交易币对信息
-            trading_pair = self.trading_pair_label.cget("text")
-            if not trading_pair or trading_pair == "--":
-                trading_pair = "未知交易币对"
             
             # 邮件内容，交易详情
             content = f"""
