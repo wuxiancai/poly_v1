@@ -2456,94 +2456,70 @@ class CryptoTrader:
             self.update_status(f"Sell_no执行失败: {str(e)}")
 
     def send_trade_email(self, trade_type, price, amount, trade_count):
-        """
-        发送交易邮件
-        """
-        try:
-            # 获取本机 HOSTNAME
-            hostname = socket.gethostname()
-            # 邮件配置
-            sender = 'wuxiancai1978@gmail.com'
-            receiver = 'huacaihuijin@126.com'
-            # 使用应用专用密码而不是账户密码
-            app_password = 'ixcq corr uovj tgqe'  # Gmail应用专用密码
-            
-            self.logger.info(f"准备发送邮件: {trade_type}")
-            
-            # 创建邮件对象
-            msg = MIMEMultipart()
-            
-            # 获取当前时间
-            current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            
-            # 获取交易币对信息
-            trading_pair = self.trading_pair_label.cget("text")
-            if not trading_pair or trading_pair == "--":
-                trading_pair = "未知交易币对"
-            # 设置邮件主题
-            subject = f'{hostname}第{trade_count}次{trade_type}的{trading_pair}'
-            msg['Subject'] = Header(subject, 'utf-8')
-            
-            # 设置发件人和收件人
-            msg['From'] = sender
-            msg['To'] = receiver
-            
-            # 邮件内容，交易详情
-            content = f"""
-            交易账户: {hostname}
-            交易币对: {trading_pair}
-            交易类型: {trade_type}
-            交易价格: ${price:.2f}
-            交易金额: ${amount:.2f}
-            交易时间: {current_time}
-            当前总交易次数: {trade_count}
-            """
-            
-            msg.attach(MIMEText(content, 'plain', 'utf-8'))
-            
-            self.logger.info("正在连接Gmail SMTP服务器...")
-            
+        """发送交易邮件"""
+        max_retries = 3
+        retry_delay = 5
+        
+        for attempt in range(max_retries):
             try:
-                # 连接Gmail SMTP服务器
-                server = smtplib.SMTP('smtp.gmail.com', 587)
-                server.set_debuglevel(1)  # 启用调试模式
-                self.logger.info("SMTP连接成功")
+                hostname = socket.gethostname()
+                sender = 'huacaihuijin@126.com'
+                receiver = 'huacaihuijin@126.com'
+                app_password = 'YUwsXZ8SYSW6RcTf'  # 有效期 180 天，请及时更新，下次到期日 2025-06-29
                 
-                server.starttls()
-                self.logger.info("TLS连接成功")
+                # 获取交易币对信息
+                trading_pair = self.trading_pair_label.cget("text")
+                if not trading_pair or trading_pair == "--":
+                    trading_pair = "未知交易币对"
                 
-                # 登录
-                server.login(sender, app_password)
-                self.logger.info("Gmail登录成功")
+                msg = MIMEMultipart()
+                current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                subject = f'{hostname}第{trade_count}次{trade_type}的{trading_pair}'
+                msg['Subject'] = Header(subject, 'utf-8')
+                msg['From'] = sender
+                msg['To'] = receiver
                 
-                # 发送邮件
-                server.sendmail(sender, receiver, msg.as_string())
-                self.logger.info(f"邮件发送成功: {trade_type}")
+                content = f"""
+                交易账户: {hostname}
+                交易币对: {trading_pair}
+                交易类型: {trade_type}
+                交易价格: ${price:.2f}
+                交易金额: ${amount:.2f}
+                交易时间: {current_time}
+                当前总交易次数: {trade_count}
+                """
+                msg.attach(MIMEText(content, 'plain', 'utf-8'))
                 
-                # 关闭连接
-                server.quit()
-                self.logger.info("SMTP连接已关闭")
+                self.logger.info(f"尝试发送邮件 (第{attempt + 1}次): {trade_type}")
                 
-                # 更新GUI状态
-                self.update_status(f"交易邮件发送成功: {trade_type}")
+                # 使用126.com的SMTP服务器
+                server = smtplib.SMTP_SSL('smtp.126.com', 465, timeout=5)  # 使用SSL连接
+                server.set_debuglevel(1)
                 
-            except smtplib.SMTPAuthenticationError as e:
-                error_msg = f"Gmail认证失败: {str(e)}"
-                self.logger.error(error_msg)
-                self.update_status(error_msg)
-            except smtplib.SMTPException as e:
-                error_msg = f"SMTP错误: {str(e)}"
-                self.logger.error(error_msg)
-                self.update_status(error_msg)
+                try:
+                    server.login(sender, app_password)
+                    server.sendmail(sender, receiver, msg.as_string())
+                    self.logger.info(f"邮件发送成功: {trade_type}")
+                    self.update_status(f"交易邮件发送成功: {trade_type}")
+                    return  # 发送成功,退出重试循环
+                except Exception as e:
+                    self.logger.error(f"SMTP操作失败 (尝试 {attempt + 1}/{max_retries}): {str(e)}")
+                    if attempt < max_retries - 1:
+                        self.logger.info(f"等待 {retry_delay} 秒后重试...")
+                        time.sleep(retry_delay)
+                finally:
+                    try:
+                        server.quit()
+                    except Exception:
+                        pass          
             except Exception as e:
-                error_msg = f"发送邮件时发生错误: {str(e)}"
-                self.logger.error(error_msg)
-                self.update_status(error_msg)
-                
-        except Exception as e:
-            error_msg = f"准备邮件发送失败: {str(e)}"
-            self.logger.error(error_msg)
-            self.update_status(error_msg)
+                self.logger.error(f"邮件准备失败 (尝试 {attempt + 1}/{max_retries}): {str(e)}")
+                if attempt < max_retries - 1:
+                    time.sleep(retry_delay)     
+        # 所有重试都失败
+        error_msg = f"发送邮件失败,已重试{max_retries}次"
+        self.logger.error(error_msg)
+        self.update_status(error_msg)
 
 if __name__ == "__main__":
     try:
