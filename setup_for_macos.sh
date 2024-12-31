@@ -83,7 +83,18 @@ brew install --cask google-chrome --force
 brew install chromedriver --force
 
 chmod +x start_chrome.sh
+# 创建自动启动脚本
+cat > run_trader.sh << 'EOL'
+# 激活虚拟环境
+source venv/bin/activate
+
+# 运行交易程序
+python3 crypto_trader.py
+EOL
+
+chmod +x run_trader.sh
 chmod +x crypto_trader.py
+
 # 验证安装
 echo "=== 验证安装 ==="
 echo "Python 路径: $(which python3)"
