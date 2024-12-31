@@ -68,6 +68,7 @@ python3.9 -m pip install --upgrade pip
 echo "安装依赖..."
 pip3 install --no-cache-dir selenium
 pip3 install --no-cache-dir pyautogui
+pip3 install --no-cache-dir keyboard
 
 # 配置 Python 环境变量 (避免重复添加)
 echo "配置环境变量..."
@@ -83,19 +84,7 @@ brew install --cask google-chrome --force
 brew install chromedriver --force
 
 chmod +x start_chrome.sh
-
-# 创建自动启动脚本
-cat > run_trader.sh << 'EOL'
-
-# 激活虚拟环境
-source venv/bin/activate
-
-# 运行交易程序
-python3 crypto_trader.py
-EOL
-
-chmod +x run_trader.sh
-
+chmod +x crypto_trader.py
 # 验证安装
 echo "=== 验证安装 ==="
 echo "Python 路径: $(which python3)"

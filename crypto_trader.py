@@ -25,6 +25,8 @@ from email.mime.multipart import MIMEMultipart
 from email.header import Header
 import socket
 import sys
+import keyboard
+import subprocess
 
 
 class Logger:
@@ -98,6 +100,14 @@ class CryptoTrader:
             self.logger.error(f"初始化失败: {str(e)}")
             messagebox.showerror("错误", "程序初始化失败，请检查日志文件")
             sys.exit(1)
+        
+        # 检查是否是重启
+        import sys
+        self.is_restart = '--restart' in sys.argv
+        
+        # 如果是重启,延迟2秒后自动点击开始监控
+        if self.is_restart:
+            self.root.after(2000, self.auto_start_monitor)
 
     def load_config(self):
         try:
@@ -701,14 +711,21 @@ class CryptoTrader:
         # 启用更金额按钮
         self.update_amount_button['state'] = 'normal'
         
-        # 8秒后自动点击更新金额按钮
-        self.root.after(8000, self.update_amount_button.invoke)
+        # 5秒后自动点击更新金额按钮
+        self.root.after(5000, self.update_amount_button.invoke)
 
         # 重置交易次数计数器
         self.trade_count = 0
         
         # 启动浏览器作线程
         threading.Thread(target=self._start_browser_monitoring, args=(new_url,), daemon=True).start()
+
+        # 添加键盘监听器
+        if self.keyboard_listener:
+            self.keyboard_listener.stop()
+            self.keyboard_listener = None
+        self.keyboard_listener = keyboard.Listener(on_press=self.on_press)
+        self.keyboard_listener.start()
 
     def _start_browser_monitoring(self, new_url):
         """在新线程中执行浏览器操作"""
@@ -802,6 +819,14 @@ class CryptoTrader:
         # 记录最终交易次数
         final_trade_count = self.trade_count
         self.logger.info(f"本次监控共执行 {final_trade_count} 次交易")
+
+        # 停止键盘监听器
+        if self.keyboard_listener:
+            self.keyboard_listener.stop()
+            self.keyboard_listener.join()  # 等待监听器完全停止
+            self.keyboard_listener = None                       
+
+                    
 
     def save_config(self):
         # 从GUI获取并保存配置
@@ -1475,14 +1500,20 @@ class CryptoTrader:
                     time.sleep(0.5)
                     self._handle_metamask_popup()
                     """因为网站的原因，必须刷新多次页面，否则会报错，故不能删除或者合并以下等待和刷新代码"""
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
+                    self.driver.refresh()
+                    # 等待3秒
+                    time.sleep(3)
+                    self.driver.refresh()
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
                     
                     # 增加交易次数
@@ -1528,14 +1559,20 @@ class CryptoTrader:
                     time.sleep(1)
                     self._handle_metamask_popup()
                     """因为网站的原因，必须刷新多次页面，否则会报错，故不能删除或者合并以下等待和刷新代码"""
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
+                    self.driver.refresh()
+                    # 等待3秒
+                    time.sleep(3)
+                    self.driver.refresh()
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
                     
                     # 增加交易次数
@@ -1625,14 +1662,20 @@ class CryptoTrader:
                     time.sleep(1)
                     self._handle_metamask_popup()
                     """因为网站的原因，必须刷新多次页面，否则会报错，故不能删除或者合并以下等待和刷新代码"""
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3 秒
+                    time.sleep(3)
                     self.driver.refresh()
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
+                    self.driver.refresh()
+                    # 等待3秒
+                    time.sleep(3)
+                    self.driver.refresh()
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
                     
                     # 买了 YES 后也要刷新页面
@@ -1670,14 +1713,20 @@ class CryptoTrader:
                     time.sleep(1)
                     self._handle_metamask_popup()
                     """因为网站的原因，必须刷新多次页面，否则会报错，故不能删除或者合并以下等待和刷新代码"""
-                    # 等待6秒
-                    time.sleep(6)
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
+                    self.driver.refresh()
+                    # 等待3秒
+                    time.sleep(3)
+                    self.driver.refresh()
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
 
                     # 重置Yes1和No1价格为0.00
@@ -1755,14 +1804,20 @@ class CryptoTrader:
                     time.sleep(1)
                     self._handle_metamask_popup()
                     """因为网站的原因，必须刷新多次页面，否则会报错，故不能删除或者合并以下等待和刷新代码"""
-                    # 等待6秒
-                    time.sleep(6)
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
+                    self.driver.refresh()
+                    # 等待3秒
+                    time.sleep(3)
+                    self.driver.refresh()
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
                     
                     # 重置Yes2和No2价格为0.00
@@ -1881,14 +1936,20 @@ class CryptoTrader:
                     time.sleep(1)
                     self._handle_metamask_popup()
                     """因为网站的原因，必须刷新多次页面，否则会报错，故不能删除或者合并以下等待和刷新代码"""
-                    # 等待6秒
-                    time.sleep(6)
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
+                    self.driver.refresh()
+                    # 等待3秒
+                    time.sleep(3)
+                    self.driver.refresh()
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
                     
                     # 重置Yes3和No3价格为0.00
@@ -1932,14 +1993,20 @@ class CryptoTrader:
                     time.sleep(1)
                     self._handle_metamask_popup()
                     """因为网站的原因，必须刷新多次页面，否则会报错，故不能删除或者合并以下等待和刷新代码"""
-                    # 等待6秒
-                    time.sleep(6)
+                    # 等待3 秒
+                    time.sleep(3)
                     self.driver.refresh()
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
+                    self.driver.refresh()
+                    # 等待3秒
+                    time.sleep(3)
+                    self.driver.refresh()
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
                     
                     # 重置Yes3和No3价格为0.00
@@ -2261,14 +2328,20 @@ class CryptoTrader:
                     # 点击Sell-卖出按钮
                     self.sell_profit_button.invoke()
                     """因为网站的原因，必须刷新多次页面，否则会报错，故不能删除或者合并以下等待和刷新代码"""
-                    # 等待6秒
-                    time.sleep(6)
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
+                    self.driver.refresh()
+                    # 等待3秒
+                    time.sleep(3)
+                    self.driver.refresh()
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
                     
                     # 发送交易邮件 - 卖出YES
@@ -2299,14 +2372,6 @@ class CryptoTrader:
                     no6_price_entry.delete(0, tk.END)
                     no6_price_entry.insert(0, "0.00")
                     
-                    # 等待1秒
-                    time.sleep(1)
-                    self.stop_button.invoke()
-                    # 等待3秒
-                    time.sleep(3)
-                    # 点击开始监控按钮
-                    self.start_button.invoke()
-                    time.sleep(3)
                     # 设置新的价格并重启监控
                     self.yes_price_entry.delete(0, tk.END)
                     self.yes_price_entry.insert(0, "0.54")
@@ -2332,6 +2397,11 @@ class CryptoTrader:
                     self.yes5_price_entry.insert(0, "0.00")
                     self.no5_price_entry.delete(0, tk.END)
                     self.no5_price_entry.insert(0, "0.00")         
+                    
+                    # 在所有操作完成后,优雅退出并重启
+                    self.logger.info("准备重启程序...")
+                    self.root.after(1000, self.restart_program)  # 1秒后重启
+                    
         except Exception as e:
             self.logger.error(f"Sell_yes执行失败: {str(e)}")
             self.update_status(f"Sell_yes执行失败: {str(e)}")
@@ -2386,14 +2456,20 @@ class CryptoTrader:
                         trade_count=7
                     )
                     """因为网站的原因，必须刷新多次页面，否则会报错，故不能删除或者合并以下等待和刷新代码"""
-                    # 等待1秒
-                    time.sleep(1)
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
-                    # 等待5秒
-                    time.sleep(5)
+                    # 等待3秒
+                    time.sleep(3)
+                    self.driver.refresh()
+                    # 等待3秒
+                    time.sleep(3)
+                    self.driver.refresh()
+                    # 等待3秒
+                    time.sleep(3)
                     self.driver.refresh()
 
                     # 卖完 NO 后卖 YES点击Positions-Sell-Yes按钮
@@ -2419,13 +2495,6 @@ class CryptoTrader:
                     no6_price_entry.delete(0, tk.END) 
                     no6_price_entry.insert(0, "0.00")
                     
-                   # 等待2秒
-                    time.sleep(2)
-                    self.stop_button.invoke()
-                    time.sleep(3)
-                    # 重新启动开始监控
-                    self.start_button.invoke()
-                    time.sleep(3)
                     # 设置新的价格并重启监控
                     self.yes_price_entry.delete(0, tk.END)
                     self.yes_price_entry.insert(0, "0.54")
@@ -2451,6 +2520,11 @@ class CryptoTrader:
                     self.yes5_price_entry.insert(0, "0.00")
                     self.no5_price_entry.delete(0, tk.END)
                     self.no5_price_entry.insert(0, "0.00")
+                    
+                    # 在所有操作完成后,优雅退出并重启
+                    self.logger.info("准备重启程序...")
+                    self.root.after(1000, self.restart_program)  # 1秒后重启
+                    
         except Exception as e:
             self.logger.error(f"Sell_no执行失败: {str(e)}")
             self.update_status(f"Sell_no执行失败: {str(e)}")
@@ -2520,6 +2594,35 @@ class CryptoTrader:
         error_msg = f"发送邮件失败,已重试{max_retries}次"
         self.logger.error(error_msg)
         self.update_status(error_msg)
+
+    def restart_program(self):
+        """重启程序,保持浏览器打开"""
+        try:
+            self.logger.info("正在重启程序...")
+            self.update_status("正在重启程序...")
+            
+            # 不关闭浏览器,只关闭GUI
+            self.root.quit()
+            
+            # 使用subprocess启动新进程,添加--restart参数
+            import subprocess
+            subprocess.Popen(['python3', 'crypto_trader.py', '--restart'])
+            
+            # 退出当前程序
+            sys.exit(0)
+            
+        except Exception as e:
+            self.logger.error(f"重启程序失败: {str(e)}")
+            self.update_status(f"重启程序失败: {str(e)}")
+
+    def auto_start_monitor(self):
+        """自动点击开始监控按钮"""
+        try:
+            self.logger.info("程序重启,自动开始监控...")
+            self.start_button.invoke()  # 触发按钮点击事件
+        except Exception as e:
+            self.logger.error(f"自动开始监控失败: {str(e)}")
+            self.update_status(f"自动开始监控失败: {str(e)}")
 
 if __name__ == "__main__":
     try:
