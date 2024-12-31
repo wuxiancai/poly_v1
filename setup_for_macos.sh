@@ -68,7 +68,6 @@ python3.9 -m pip install --upgrade pip
 echo "安装依赖..."
 pip3 install --no-cache-dir selenium
 pip3 install --no-cache-dir pyautogui
-pip3 install --no-cache-dir keyboard
 
 # 配置 Python 环境变量 (避免重复添加)
 echo "配置环境变量..."

@@ -25,7 +25,6 @@ from email.mime.multipart import MIMEMultipart
 from email.header import Header
 import socket
 import sys
-import keyboard
 import subprocess
 
 
@@ -720,13 +719,6 @@ class CryptoTrader:
         # 启动浏览器作线程
         threading.Thread(target=self._start_browser_monitoring, args=(new_url,), daemon=True).start()
 
-        # 添加键盘监听器
-        if self.keyboard_listener:
-            self.keyboard_listener.stop()
-            self.keyboard_listener = None
-        self.keyboard_listener = keyboard.Listener(on_press=self.on_press)
-        self.keyboard_listener.start()
-
     def _start_browser_monitoring(self, new_url):
         """在新线程中执行浏览器操作"""
         try:
@@ -819,14 +811,6 @@ class CryptoTrader:
         # 记录最终交易次数
         final_trade_count = self.trade_count
         self.logger.info(f"本次监控共执行 {final_trade_count} 次交易")
-
-        # 停止键盘监听器
-        if self.keyboard_listener:
-            self.keyboard_listener.stop()
-            self.keyboard_listener.join()  # 等待监听器完全停止
-            self.keyboard_listener = None                       
-
-                    
 
     def save_config(self):
         # 从GUI获取并保存配置
