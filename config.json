@@ -50,15 +50,8 @@
         "No5": {
             "target_price": 0.0,
             "amount": 0.0
-        },
-        "Yes": {
-            "target_price": 0.54,
-            "amount": 0.0
-        },
-        "No": {
-            "target_price": 0.54,
-            "amount": 0.0
         }
+        
     },
     "sell_condition": {
         "profit_percentage": 5.0,
