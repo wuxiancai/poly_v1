@@ -235,19 +235,19 @@ class CryptoTrader:
         # 初始金额设置
         ttk.Label(settings_container, text="初始金额(%):").grid(row=0, column=0, padx=5, pady=5)
         self.initial_amount_entry = ttk.Entry(settings_container, width=10)
-        self.initial_amount_entry.insert(0, "5.9")
+        self.initial_amount_entry.insert(0, "6.6")
         self.initial_amount_entry.grid(row=0, column=1, padx=5, pady=5)
         
         # 反水一次设置
         ttk.Label(settings_container, text="反水一次(%):").grid(row=0, column=2, padx=5, pady=5)
         self.first_rebound_entry = ttk.Entry(settings_container, width=10)
-        self.first_rebound_entry.insert(0, "210")
+        self.first_rebound_entry.insert(0, "214")
         self.first_rebound_entry.grid(row=0, column=3, padx=5, pady=5)
         
         # 反水N次设置
         ttk.Label(settings_container, text="反水N次(%):").grid(row=0, column=4, padx=5, pady=5)
         self.n_rebound_entry = ttk.Entry(settings_container, width=10)
-        self.n_rebound_entry.insert(0, "120")
+        self.n_rebound_entry.insert(0, "113")
         self.n_rebound_entry.grid(row=0, column=5, padx=5, pady=5)
         
         # 配置列权重使输入框均匀分布
@@ -633,6 +633,7 @@ class CryptoTrader:
             #设置重试参数
             max_retry = 30
             retry_count = 0
+            cash_value = None
 
             while retry_count < max_retry:
                 try:
@@ -697,6 +698,12 @@ class CryptoTrader:
         except Exception as e:
             self.logger.error(f"设置金额失败: {str(e)}")
             self.update_status("金额设置失败，请检查Cash值是否正确")
+            # 如果失败，安排重试
+            self.schedule_retry_update()
+
+    def schedule_retry_update(self):
+        """安排重试更新金额"""
+        self.root.after(5000, self.set_yes_no_cash)  # 5秒后重试
 
     def start_monitoring(self):
         """开始监控"""
@@ -712,18 +719,17 @@ class CryptoTrader:
         self.start_button.configure(style='Red.TButton')
         # 恢复"停止监控"文字为黑色
         self.stop_button.configure(style='Black.TButton')
-        
-        # 启用更金额按钮
-        self.update_amount_button['state'] = 'normal'
-        
-        # 自动点击更新金额按钮
-        self.schedule_update_amount()
 
         # 重置交易次数计数器
         self.trade_count = 0
         
         # 启动浏览器作线程
         threading.Thread(target=self._start_browser_monitoring, args=(self.current_url,), daemon=True).start()
+
+        # 启用更金额按钮
+        self.update_amount_button['state'] = 'normal'
+        # 自动点击更新金额按钮
+        self.schedule_update_amount()
 
         # 启动页面刷新定时器
         self.schedule_refresh()
@@ -735,10 +741,10 @@ class CryptoTrader:
     def schedule_update_amount(self, retry_count=0):
         """安排更新金额按钮点击，带重试机制"""
         try:
-            if retry_count < 5:  # 最多重试5次
-                self.logger.info(f"安排更新金额操作 (尝试 {retry_count + 1}/5)")
+            if retry_count < 15:  # 最多重试15次
+                self.logger.info(f"安排更新金额操作 (尝试 {retry_count + 1}/15)")
                 # 5秒后执行
-                self.root.after(5000, lambda: self.try_update_amount(retry_count))
+                self.root.after(2000, lambda: self.try_update_amount(retry_count))
             else:
                 self.logger.warning("更新金额操作达到最大重试次数")
         except Exception as e:
@@ -750,7 +756,7 @@ class CryptoTrader:
             self.update_amount_button.invoke()
             self.logger.info("更新金额操作执行成功")
         except Exception as e:
-            self.logger.error(f"更新金额操作失败 (尝试 {current_retry + 1}/5): {str(e)}")
+            self.logger.error(f"更新金额操作失败 (尝试 {current_retry + 1}/15): {str(e)}")
             # 如果失败，安排下一次重试
             self.schedule_update_amount(current_retry + 1)
     
