@@ -4,11 +4,11 @@
     },
     "trading": {
         "Yes0": {
-            "target_price": 0.54,
+            "target_price": 0.53,
             "amount": 0.0
         },
         "No0": {
-            "target_price": 0.54,
+            "target_price": 0.53,
             "amount": 0.0
         },
         "Yes1": {
