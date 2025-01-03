@@ -235,19 +235,19 @@ class CryptoTrader:
         # 初始金额设置
         ttk.Label(settings_container, text="初始金额(%):").grid(row=0, column=0, padx=5, pady=5)
         self.initial_amount_entry = ttk.Entry(settings_container, width=10)
-        self.initial_amount_entry.insert(0, "6.6")
+        self.initial_amount_entry.insert(0, "5.9")
         self.initial_amount_entry.grid(row=0, column=1, padx=5, pady=5)
         
         # 反水一次设置
         ttk.Label(settings_container, text="反水一次(%):").grid(row=0, column=2, padx=5, pady=5)
         self.first_rebound_entry = ttk.Entry(settings_container, width=10)
-        self.first_rebound_entry.insert(0, "214")
+        self.first_rebound_entry.insert(0, "210")
         self.first_rebound_entry.grid(row=0, column=3, padx=5, pady=5)
         
         # 反水N次设置
         ttk.Label(settings_container, text="反水N次(%):").grid(row=0, column=4, padx=5, pady=5)
         self.n_rebound_entry = ttk.Entry(settings_container, width=10)
-        self.n_rebound_entry.insert(0, "113")
+        self.n_rebound_entry.insert(0, "120")
         self.n_rebound_entry.grid(row=0, column=5, padx=5, pady=5)
         
         # 配置列权重使输入框均匀分布
@@ -2209,7 +2209,7 @@ class CryptoTrader:
                     no5_price_entry.delete(0, tk.END)
                     no5_price_entry.insert(0, "0.00")
 
-                    """当买了 6 次后预防第 5 次反水，所以价格到了 50 时就平仓，然后再自动开"""
+                    """当买了 4 次后预防第 5 次反水，所以价格到了 50 时就平仓，然后再自动开"""
                     # 设置 Yes6和No6价格为0.85
                     yes6_price_entry = self.yes_frame.grid_slaves(row=12, column=1)[0]
                     yes6_price_entry.delete(0, tk.END)
