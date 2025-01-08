@@ -84,7 +84,7 @@ class CryptoTrader:
         # 添加交易次数计数器
         self.trade_count = 0
         self.is_trading = False  # 添加交易状态标志
-        self.refresh_interval = 300000  # 5分钟 = 300000毫秒
+        self.refresh_interval = 600000  # 5分钟 = 300000毫秒
         self.refresh_timer = None  # 用于存储定时器ID
         
         try:
@@ -128,13 +128,13 @@ class CryptoTrader:
                     'url': ''
                 },
                 'trading': {
-                    'Yes0': {'target_price': 0.53, 'amount': 0.0},
+                    'Yes0': {'target_price': 0.54, 'amount': 0.0},
                     'Yes1': {'target_price': 0.00, 'amount': 0.0},
                     'Yes2': {'target_price': 0.00, 'amount': 0.0},
                     'Yes3': {'target_price': 0.00, 'amount': 0.0},
                     'Yes4': {'target_price': 0.00, 'amount': 0.0},
                     'Yes5': {'target_price': 0.00, 'amount': 0.0},
-                    'No0': {'target_price': 0.53, 'amount': 0.0},
+                    'No0': {'target_price': 0.54, 'amount': 0.0},
                     'No1': {'target_price': 0.00, 'amount': 0.0},
                     'No2': {'target_price': 0.00, 'amount': 0.0},
                     'No3': {'target_price': 0.00, 'amount': 0.0},
@@ -235,19 +235,19 @@ class CryptoTrader:
         # 初始金额设置
         ttk.Label(settings_container, text="初始金额(%):").grid(row=0, column=0, padx=5, pady=5)
         self.initial_amount_entry = ttk.Entry(settings_container, width=10)
-        self.initial_amount_entry.insert(0, "6.6")
+        self.initial_amount_entry.insert(0, "5.2")
         self.initial_amount_entry.grid(row=0, column=1, padx=5, pady=5)
         
         # 反水一次设置
         ttk.Label(settings_container, text="反水一次(%):").grid(row=0, column=2, padx=5, pady=5)
         self.first_rebound_entry = ttk.Entry(settings_container, width=10)
-        self.first_rebound_entry.insert(0, "214")
+        self.first_rebound_entry.insert(0, "220")
         self.first_rebound_entry.grid(row=0, column=3, padx=5, pady=5)
         
         # 反水N次设置
         ttk.Label(settings_container, text="反水N次(%):").grid(row=0, column=4, padx=5, pady=5)
         self.n_rebound_entry = ttk.Entry(settings_container, width=10)
-        self.n_rebound_entry.insert(0, "113")
+        self.n_rebound_entry.insert(0, "125")
         self.n_rebound_entry.grid(row=0, column=5, padx=5, pady=5)
         
         # 配置列权重使输入框均匀分布
@@ -1609,14 +1609,14 @@ class CryptoTrader:
                     # 设置No1价格为0.53
                     no1_price_entry = self.no_frame.grid_slaves(row=2, column=1)[0]
                     no1_price_entry.delete(0, tk.END)
-                    no1_price_entry.insert(0, "0.53")
+                    no1_price_entry.insert(0, "0.54")
                     # 设置 Yes6和No6价格为0.85
                     yes6_price_entry = self.yes_frame.grid_slaves(row=12, column=1)[0]
                     yes6_price_entry.delete(0, tk.END)
-                    yes6_price_entry.insert(0, "0.99")
+                    yes6_price_entry.insert(0, "0.85")
                     no6_price_entry = self.no_frame.grid_slaves(row=12, column=1)[0]
                     no6_price_entry.delete(0, tk.END)
-                    no6_price_entry.insert(0, "0.99")
+                    no6_price_entry.insert(0, "0.85")
                     # 增加等待 1秒
                     time.sleep(1)
                     
@@ -1653,14 +1653,14 @@ class CryptoTrader:
                     # 设置Yes1价格为0.53
                     yes1_price_entry = self.yes_frame.grid_slaves(row=2, column=1)[0]
                     yes1_price_entry.delete(0, tk.END)
-                    yes1_price_entry.insert(0, "0.53")
+                    yes1_price_entry.insert(0, "0.54")
                     # 设置 Yes6和No6价格为0.85
                     yes6_price_entry = self.yes_frame.grid_slaves(row=12, column=1)[0]
                     yes6_price_entry.delete(0, tk.END)
-                    yes6_price_entry.insert(0, "0.99")
+                    yes6_price_entry.insert(0, "0.85")
                     no6_price_entry = self.no_frame.grid_slaves(row=12, column=1)[0]
                     no6_price_entry.delete(0, tk.END)
-                    no6_price_entry.insert(0, "0.99")
+                    no6_price_entry.insert(0, "0.85")
                     # 增加等待 1秒
                     time.sleep(1)
         except ValueError as e:
@@ -1731,7 +1731,7 @@ class CryptoTrader:
                     # 设置No2价格为0.53
                     no2_price_entry = self.no_frame.grid_slaves(row=4, column=1)[0]
                     no2_price_entry.delete(0, tk.END)
-                    no2_price_entry.insert(0, "0.53")
+                    no2_price_entry.insert(0, "0.54")
                     
                     # 增加交易次数
                     self.trade_count += 1
@@ -1767,7 +1767,7 @@ class CryptoTrader:
                     # 设置Yes2价格为0.53
                     yes2_price_entry = self.yes_frame.grid_slaves(row=4, column=1)[0]
                     yes2_price_entry.delete(0, tk.END)
-                    yes2_price_entry.insert(0, "0.53")
+                    yes2_price_entry.insert(0, "0.54")
                     
                     # 增加交易次数
                     self.trade_count += 1
@@ -1845,7 +1845,7 @@ class CryptoTrader:
                     # 设置No3价格为0.53
                     no3_price_entry = self.no_frame.grid_slaves(row=6, column=1)[0]
                     no3_price_entry.delete(0, tk.END)
-                    no3_price_entry.insert(0, "0.53")
+                    no3_price_entry.insert(0, "0.54")
                     # 增加交易次数
                     self.trade_count += 1
                     # 发送交易邮件
@@ -1878,7 +1878,7 @@ class CryptoTrader:
                     # 设置Yes3价格为0.53
                     yes3_price_entry = self.yes_frame.grid_slaves(row=6, column=1)[0]
                     yes3_price_entry.delete(0, tk.END)
-                    yes3_price_entry.insert(0, "0.53")
+                    yes3_price_entry.insert(0, "0.54")
                    
                     # 增加交易次数
                     self.trade_count += 1
@@ -1957,7 +1957,7 @@ class CryptoTrader:
                     # 设置No4价格为0.53
                     no4_price_entry = self.no_frame.grid_slaves(row=8, column=1)[0]
                     no4_price_entry.delete(0, tk.END)
-                    no4_price_entry.insert(0, "0.53")
+                    no4_price_entry.insert(0, "0.54")
                 # 检查No3价格匹配
                 elif abs(no3_target - no_price) < 0.0001 and no3_target > 0:
                     self.logger.info("No 3价格匹配，执行自动交易")
@@ -1981,7 +1981,7 @@ class CryptoTrader:
                     # 设置Yes4价格为0.53
                     yes4_price_entry = self.yes_frame.grid_slaves(row=8, column=1)[0]
                     yes4_price_entry.delete(0, tk.END)
-                    yes4_price_entry.insert(0, "0.53")
+                    yes4_price_entry.insert(0, "0.54")
 
                     # 增加交易次数
                     self.trade_count += 1
@@ -2060,7 +2060,7 @@ class CryptoTrader:
                     # 设No5价格为0.53
                     no5_price_entry = self.no_frame.grid_slaves(row=10, column=1)[0]
                     no5_price_entry.delete(0, tk.END)
-                    no5_price_entry.insert(0, "0.53")
+                    no5_price_entry.insert(0, "0.54")
 
                     # 增加交易次数
                     self.trade_count += 1
@@ -2094,7 +2094,7 @@ class CryptoTrader:
                     # 设置Yes5价格为0.53
                     yes5_price_entry = self.yes_frame.grid_slaves(row=10, column=1)[0]
                     yes5_price_entry.delete(0, tk.END)
-                    yes5_price_entry.insert(0, "0.53")
+                    yes5_price_entry.insert(0, "0.54")
 
                     # 增加交易次数
                     self.trade_count += 1
@@ -2174,7 +2174,7 @@ class CryptoTrader:
                     # 设置 Yes6和No6价格为0.98
                     yes6_price_entry = self.yes_frame.grid_slaves(row=12, column=1)[0]
                     yes6_price_entry.delete(0, tk.END)
-                    yes6_price_entry.insert(0, "0.99")
+                    yes6_price_entry.insert(0, "0.85")
                     no6_price_entry = self.no_frame.grid_slaves(row=12, column=1)[0]
                     no6_price_entry.delete(0, tk.END)
                     no6_price_entry.insert(0, "0.5")
@@ -2216,7 +2216,7 @@ class CryptoTrader:
                     yes6_price_entry.insert(0, "0.5")
                     no6_price_entry = self.no_frame.grid_slaves(row=12, column=1)[0]
                     no6_price_entry.delete(0, tk.END)
-                    no6_price_entry.insert(0, "0.99")
+                    no6_price_entry.insert(0, "0.85")
                     # 增加交易次数
                     self.trade_count += 1
                     # 发送交易邮件
@@ -2309,9 +2309,9 @@ class CryptoTrader:
                     
                     # 设置新的价格并重启监控
                     self.yes_price_entry.delete(0, tk.END)
-                    self.yes_price_entry.insert(0, "0.53")
+                    self.yes_price_entry.insert(0, "0.54")
                     self.no_price_entry.delete(0, tk.END)
-                    self.no_price_entry.insert(0, "0.53")
+                    self.no_price_entry.insert(0, "0.54")
                     self.yes1_price_entry.delete(0, tk.END)
                     self.yes1_price_entry.insert(0, "0.00")
                     self.no1_price_entry.delete(0, tk.END)
@@ -2420,9 +2420,9 @@ class CryptoTrader:
                     
                     # 设置新的价格并重启监控
                     self.yes_price_entry.delete(0, tk.END)
-                    self.yes_price_entry.insert(0, "0.53")
+                    self.yes_price_entry.insert(0, "0.54")
                     self.no_price_entry.delete(0, tk.END)
-                    self.no_price_entry.insert(0, "0.53")
+                    self.no_price_entry.insert(0, "0.54")
                     self.yes1_price_entry.delete(0, tk.END)
                     self.yes1_price_entry.insert(0, "0.00")
                     self.no1_price_entry.delete(0, tk.END)
@@ -2576,9 +2576,9 @@ class CryptoTrader:
             operation_name (str): 操作名称,用于日志记录
         """
         try:
-            for i in range(3):  # 重复4次，如果要重复 5 次，修改数字即可
+            for i in range(6):  # 重复4次，如果要重复 5 次，修改数字即可
                 self.logger.info(f"{operation_name} - 等待3秒后刷新页面 ({i+1}/4)")
-                time.sleep(6)  # 等待3秒
+                time.sleep(3)  # 等待3秒
                 self.driver.refresh()  # 刷新页面       
         except Exception as e:
             self.logger.error(f"{operation_name} - sleep_refresh操作失败: {str(e)}")
